@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GeoExplorer | Jonatan E. Gonzalez</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       HEADER
+  ════════════════════════════════════════════════════════════════ -->
+  <header id="topbar">
+    <div class="topbar-brand">
+      <span class="brand-icon">◈</span>
+      <span class="brand-name">GeoExplorer</span>
+      <span class="brand-sep"> | </span>
+      <span class="brand-author">Jonatan E. Gonzalez</span>
+    </div>
+    <div class="topbar-center">
+      <span id="year-display-header">2022</span>
+    </div>
+    <div class="topbar-actions">
+      <button class="tb-btn" id="btn-3d" title="Toggle view">⬡ Globe</button>
+      <button class="tb-btn" id="btn-download" title="Export data">↓ Export</button>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       LAYOUT WRAPPER
+  ════════════════════════════════════════════════════════════════ -->
+  <div id="layout">
+
+    <!-- ── LEFT PANEL ─────────────────────────────────────────── -->
+    <aside id="panel-left">
+      <div class="panel-section">
+        <div class="section-header">
+          <span class="section-icon">⬡</span>
+          <span>CAPAS</span>
+          <button class="section-toggle active" data-section="layers">▾</button>
+        </div>
+        <div class="section-body" id="sec-layers">
+          <label class="layer-item active" data-layer="gdp">
+            <span class="layer-dot" style="background:var(--c-gdp)"></span>
+            <span>GDP per Cápita</span>
+            <input type="checkbox" checked />
+          </label>
+          <label class="layer-item" data-layer="le">
+            <span class="layer-dot" style="background:var(--c-le)"></span>
+            <span>Esperanza de Vida</span>
+            <input type="checkbox" />
+          </label>
+          <label class="layer-item" data-layer="pop">
+            <span class="layer-dot" style="background:var(--c-pop)"></span>
+            <span>Población (burbuja)</span>
+            <input type="checkbox" checked />
+          </label>
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <div class="section-header">
+          <span class="section-icon">◎</span>
+          <span>REGIONES</span>
+          <button class="section-toggle active" data-section="regions">▾</button>
+        </div>
+        <div class="section-body" id="sec-regions">
+          <div id="region-list"></div>
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <div class="section-header">
+          <span class="section-icon">⊹</span>
+          <span>PAÍS ACTIVO</span>
+        </div>
+        <div class="section-body">
+          <div id="active-country-card">
+            <div class="country-placeholder">Selecciona un país en el mapa</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ── MAP CENTER ──────────────────────────────────────────── -->
+    <main id="map-wrapper">
+      <div id="map"></div>
+
+      <!-- Legend floating button -->
+      <button id="legend-toggle">◈ Leyenda</button>
+
+      <!-- Floating legend panel -->
+      <div id="legend-panel" class="hidden">
+        <div class="legend-title">LEYENDA ACTIVA</div>
+        <div id="legend-content"></div>
+      </div>
+
+      <!-- Time slider bar -->
+      <div id="timebar">
+        <div class="timebar-inner">
+          <button id="play-btn" title="Play/Pause">▶</button>
+          <div class="slider-wrap">
+            <input type="range" id="year-slider" min="1950" max="2022" value="2022" step="1" />
+            <div class="slider-ticks">
+              <span>1950</span><span>1960</span><span>1970</span><span>1980</span>
+              <span>1990</span><span>2000</span><span>2010</span><span>2022</span>
+            </div>
+          </div>
+          <div class="year-badge" id="year-badge">2022</div>
+        </div>
+      </div>
+    </main>
+
+    <!-- ── RIGHT PANEL ─────────────────────────────────────────── -->
+    <aside id="panel-right">
+      <div class="panel-section full-h">
+        <div class="section-header">
+          <span class="section-icon">◈</span>
+          <span>ANÁLISIS <span id="right-year-label">2022</span></span>
+        </div>
+        <div class="section-body charts-body" id="sec-charts">
+
+          <!-- Scatter GDP vs LE -->
+          <div class="chart-card" id="card-scatter">
+            <div class="chart-card-title">GDP vs Esperanza de Vida</div>
+            <div class="chart-container">
+              <canvas id="chart-scatter"></canvas>
+            </div>
+          </div>
+
+          <!-- Donut regions -->
+          <div class="chart-card" id="card-donut">
+            <div class="chart-card-title">Distribución por Región</div>
+            <div class="chart-container donut-wrap">
+              <canvas id="chart-donut"></canvas>
+            </div>
+          </div>
+
+          <!-- Bar top countries LE -->
+          <div class="chart-card" id="card-bar">
+            <div class="chart-card-title">Top 10 — Esperanza de Vida</div>
+            <div class="chart-container">
+              <canvas id="chart-bar"></canvas>
+            </div>
+          </div>
+
+          <!-- Bar top GDP -->
+          <div class="chart-card" id="card-gdp">
+            <div class="chart-card-title">Top 10 — GDP per Cápita</div>
+            <div class="chart-container">
+              <canvas id="chart-gdp"></canvas>
+            </div>
+          </div>
+
+          <!-- Trend line selected country -->
+          <div class="chart-card" id="card-trend">
+            <div class="chart-card-title">Serie temporal — <span id="trend-country-label">Global Avg</span></div>
+            <div class="chart-container">
+              <canvas id="chart-trend"></canvas>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </aside>
+
+  </div><!-- /layout -->
+
+  <script src="app.js"></script>
+</body>
+</html>
