@@ -148,6 +148,14 @@
         </div>
         <div class="section-body charts-body" id="sec-charts">
 
+          <!-- Trend line selected country -->
+          <div class="chart-card" id="card-trend">
+            <div class="chart-card-title">Serie temporal — <span id="trend-country-label">Global Avg</span></div>
+            <div class="chart-container">
+              <canvas id="chart-trend"></canvas>
+            </div>
+          </div>
+          
           <!-- Scatter GDP vs LE -->
           <div class="chart-card" id="card-scatter">
             <div class="chart-card-title">GDP vs Esperanza de Vida</div>
@@ -209,14 +217,6 @@
             <div class="chart-card-title">GDP vs Pobreza Extrema</div>
             <div class="chart-container">
               <canvas id="chart-gdp-pov"></canvas>
-            </div>
-          </div>
-
-          <!-- Trend line selected country -->
-          <div class="chart-card" id="card-trend">
-            <div class="chart-card-title">Serie temporal — <span id="trend-country-label">Global Avg</span></div>
-            <div class="chart-container">
-              <canvas id="chart-trend"></canvas>
             </div>
           </div>
 
