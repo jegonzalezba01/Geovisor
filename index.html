@@ -31,7 +31,7 @@
       <span class="brand-author">Jonatan E. Gonzalez</span>
     </div>
     <div class="topbar-center">
-      <span id="year-display-header">2022</span>
+      <span id="year-display-header">2015</span>
     </div>
     <div class="topbar-actions">
       <button class="tb-btn" id="btn-3d" title="Toggle view">⬡ Globe</button>
@@ -61,6 +61,21 @@
           <label class="layer-item" data-layer="le">
             <span class="layer-dot" style="background:var(--c-le)"></span>
             <span>Esperanza de Vida</span>
+            <input type="checkbox" />
+          </label>
+          <label class="layer-item" data-layer="fert">
+            <span class="layer-dot" style="background:var(--c-fert)"></span>
+            <span>Fertilidad (hijos/mujer)</span>
+            <input type="checkbox" />
+          </label>
+          <label class="layer-item" data-layer="hdi">
+            <span class="layer-dot" style="background:var(--c-hdi)"></span>
+            <span>Índ. Desarrollo Humano</span>
+            <input type="checkbox" />
+          </label>
+          <label class="layer-item" data-layer="pov">
+            <span class="layer-dot" style="background:var(--c-pov)"></span>
+            <span>Pobreza Extrema ($3/día)</span>
             <input type="checkbox" />
           </label>
           <label class="layer-item" data-layer="pop">
@@ -100,7 +115,7 @@
       <div id="map"></div>
 
       <!-- Legend floating button -->
-      <button id="legend-toggle">◈ Leyenda</button>
+      <button id="legend-toggle">Leyenda</button>
 
       <!-- Floating legend panel -->
       <div id="legend-panel" class="hidden">
@@ -113,13 +128,13 @@
         <div class="timebar-inner">
           <button id="play-btn" title="Play/Pause">▶</button>
           <div class="slider-wrap">
-            <input type="range" id="year-slider" min="1950" max="2022" value="2022" step="1" />
+            <input type="range" id="year-slider" min="1950" max="2022" value="2015" step="1" />
             <div class="slider-ticks">
               <span>1950</span><span>1960</span><span>1970</span><span>1980</span>
               <span>1990</span><span>2000</span><span>2010</span><span>2022</span>
             </div>
           </div>
-          <div class="year-badge" id="year-badge">2022</div>
+          <div class="year-badge" id="year-badge">2015</div>
         </div>
       </div>
     </main>
@@ -143,7 +158,7 @@
 
           <!-- Donut regions -->
           <div class="chart-card" id="card-donut">
-            <div class="chart-card-title">Distribución por Región</div>
+            <div class="chart-card-title">Cantidad de habitantes por Región</div>
             <div class="chart-container donut-wrap">
               <canvas id="chart-donut"></canvas>
             </div>
@@ -162,6 +177,38 @@
             <div class="chart-card-title">Top 10 — GDP per Cápita</div>
             <div class="chart-container">
               <canvas id="chart-gdp"></canvas>
+            </div>
+          </div>
+
+          <!-- Bar HDI -->
+          <div class="chart-card" id="card-hdi">
+            <div class="chart-card-title">Top 10 — Índice de Desarrollo Humano</div>
+            <div class="chart-container">
+              <canvas id="chart-hdi"></canvas>
+            </div>
+          </div>
+
+          <!-- Bar Pobreza Extrema -->
+          <div class="chart-card" id="card-pov">
+            <div class="chart-card-title">Top 10 — Pobreza Extrema ($3/día)</div>
+            <div class="chart-container">
+              <canvas id="chart-pov"></canvas>
+            </div>
+          </div>
+
+          <!-- Scatter HDI vs Fertilidad -->
+          <div class="chart-card" id="card-hdi-fert">
+            <div class="chart-card-title">HDI vs Fertilidad</div>
+            <div class="chart-container">
+              <canvas id="chart-hdi-fert"></canvas>
+            </div>
+          </div>
+
+          <!-- Scatter GDP vs Pobreza -->
+          <div class="chart-card" id="card-gdp-pov">
+            <div class="chart-card-title">GDP vs Pobreza Extrema</div>
+            <div class="chart-container">
+              <canvas id="chart-gdp-pov"></canvas>
             </div>
           </div>
 

@@ -28,6 +28,9 @@
   --c-gdp:  #00ccb4;
   --c-le:   #e05c2a;
   --c-pop:  #3399ff;
+  --c-fert: #a050e0;   /* violeta */
+  --c-hdi:  #33cc66;   /* verde    */
+  --c-pov:  #ff7733;   /* naranja  */
 
   /* Paleta de regiones (tomada de la imagen de paleta) */
   --r-africa:    #f4a932;   /* amarillo-naranja */
@@ -298,6 +301,9 @@ body {
 .stat-value { color: var(--accent); font-weight: 700; font-family: var(--font-mono); }
 .stat-value.orange { color: var(--accent2); }
 .stat-value.purple { color: #3399ff; }
+.stat-value.fert   { color: #cc55ff; }
+.stat-value.hdi    { color: #33cc66; }
+.stat-value.pov    { color: #ff7733; }
 
 /* ══════════════════════════════════════════════════════════
    MAP
